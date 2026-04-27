@@ -2,7 +2,7 @@
 
 Finite computational representations of operators acting on functions, fields, and empirical measures.
 
-NeuralMeasureOperators is a lightweight Python package for experimenting with the operator-theoretic view of neural computation. It treats data arrays as finite representations of structured objects: coordinate fields, image fields, empirical measures, and kernel-induced feature measures.
+NeuralMeasureOperators is a lightweight Python package for experimenting with the operator-theoretic view of neural computation. It treats arrays as finite representations of structured objects: coordinate fields, image fields, empirical measures, and kernel-induced feature measures.
 
 The package provides sklearn-compatible components for:
 
@@ -35,7 +35,7 @@ T_h
 
 The continuous object is an operator on functions or measures. The implemented model is a finite representation of that operator, obtained through sampling, projection, truncation, empirical embedding, or kernel approximation.
 
-This makes standard arrays less primitive. A vector, image, graph signal, point cloud, or token sequence can be treated as a finite representation of a structured function or measure.
+A vector, image, graph signal, point cloud, or token sequence can be treated as a finite representation of a structured function or measure.
 
 ## Mathematical view
 
@@ -57,12 +57,7 @@ u(y),
 \right).
 \]
 
-Here:
-
-- \(K\) is an interaction kernel;
-- \(\Psi\) transforms features before aggregation;
-- \(\Gamma\) updates the state at the output site;
-- \(\mu\) determines how information is integrated over the domain.
+Here \(K\) is an interaction kernel, \(\Psi\) transforms features before aggregation, \(\Gamma\) updates the state at the output site, and \(\mu\) determines how information is integrated over the domain.
 
 A finite representation replaces the function or measure by samples, coefficients, basis projections, quadrature nodes, graph vertices, Fourier modes, or empirical measures.
 
@@ -203,7 +198,7 @@ Recommended package layout:
 
 ```text
 NeuralMeasureOperators/
-  neural_measure_operators/
+  NeuralMeasureOperators/
     __init__.py
     representations.py
     pipelines.py
@@ -211,10 +206,28 @@ NeuralMeasureOperators/
   pyproject.toml
 ```
 
+Minimal `pyproject.toml`:
+
+```toml
+[project]
+name = "NeuralMeasureOperators"
+version = "0.1.0"
+description = "Finite computational representations of operators acting on functions, fields, and empirical measures."
+requires-python = ">=3.9"
+dependencies = [
+    "numpy",
+    "scipy",
+    "scikit-learn",
+]
+
+[tool.setuptools.packages.find]
+include = ["NeuralMeasureOperators*"]
+```
+
 ## Basic imports
 
 ```python
-from neural_measure_operators import (
+from NeuralMeasureOperators import (
     DCT2DLowFreq,
     RBFClassMeanClassifier,
     raw_logistic,
@@ -241,7 +254,7 @@ from sklearn.datasets import load_breast_cancer
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
 
-from neural_measure_operators import (
+from NeuralMeasureOperators import (
     raw_logistic,
     pca_logistic,
     kernel_mean,
@@ -309,7 +322,7 @@ from sklearn.datasets import load_digits
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
 
-from neural_measure_operators import (
+from NeuralMeasureOperators import (
     raw_logistic,
     pca_logistic,
     dct_logistic,
@@ -370,7 +383,7 @@ is a sampled image field.
 ```python
 from sklearn.datasets import load_digits
 
-from neural_measure_operators import DCT2DLowFreq
+from NeuralMeasureOperators import DCT2DLowFreq
 
 digits = load_digits()
 X = digits.data.astype(float) / 16.0
@@ -402,7 +415,7 @@ from sklearn.datasets import load_breast_cancer
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
-from neural_measure_operators import RBFClassMeanClassifier
+from NeuralMeasureOperators import RBFClassMeanClassifier
 
 data = load_breast_cancer()
 
@@ -460,8 +473,6 @@ kernel_mean(gamma="scale")
 nystroem_ridge(n_components=128, gamma=0.02)
 exact_rbf_svm(C=10.0, gamma="scale")
 ```
-
-
 
 ## License
 
