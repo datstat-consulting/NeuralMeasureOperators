@@ -4,7 +4,7 @@ Finite computational representations of operators acting on functions, fields, a
 
 NeuralMeasureOperators is a lightweight Python package for experimenting with the operator-theoretic view of neural computation. It treats arrays as finite representations of structured objects: coordinate fields, image fields, empirical measures, and kernel-induced feature measures.
 
-The package provides sklearn-compatible components for:
+The package provides scikit-learn-compatible components for:
 
 - raw finite-field classifiers
 - PCA field projections
@@ -182,16 +182,22 @@ This gives a lower-rank computable approximation of an RBF kernel machine.
 
 ## Installation
 
-Install dependencies:
-
-```bash
-pip install numpy scipy scikit-learn
-```
-
-Install the local package:
+Install locally from the repository root:
 
 ```bash
 pip install -e .
+```
+
+The install/distribution name is:
+
+```text
+neural-measure-operators
+```
+
+The Python import package is:
+
+```python
+import NeuralMeasureOperators
 ```
 
 ## Basic imports
