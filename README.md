@@ -15,23 +15,23 @@ The package provides sklearn-compatible components for:
 
 The guiding principle is:
 
-\[
+$$
 \text{operator}
 \;\longrightarrow\;
 \text{represented function or measure}
 \;\longrightarrow\;
 \text{finite computable approximation}.
-\]
+$$
 
 NeuralMeasureOperators follows the decomposition
 
-\[
+$$
 T
 \quad\leadsto\quad
 T_h
 \quad\leadsto\quad
 \text{finite computation}.
-\]
+$$
 
 The continuous object is an operator on functions or measures. The implemented model is a finite representation of that operator, obtained through sampling, projection, truncation, empirical embedding, or kernel approximation.
 
@@ -39,15 +39,15 @@ A vector, image, graph signal, point cloud, or token sequence can be treated as 
 
 ## Mathematical view
 
-Let \((X,\mathcal A,\mu)\) be a measure space and let
+Let $(X,\mathcal{A},\mu)$ be a measure space and let
 
-\[
+$$
 u:X\to E
-\]
+$$
 
 be a feature field. A broad class of neural and kernel-based transformations can be written as
 
-\[
+$$
 (Tu)(y)
 =
 \Gamma\left(
@@ -55,21 +55,21 @@ y,
 u(y),
 \int_X K(y,x,u)\Psi(u(x))\,d\mu(x)
 \right).
-\]
+$$
 
-Here \(K\) is an interaction kernel, \(\Psi\) transforms features before aggregation, \(\Gamma\) updates the state at the output site, and \(\mu\) determines how information is integrated over the domain.
+Here $K$ is an interaction kernel, $\Psi$ transforms features before aggregation, $\Gamma$ updates the state at the output site, and $\mu$ determines how information is integrated over the domain.
 
 A finite representation replaces the function or measure by samples, coefficients, basis projections, quadrature nodes, graph vertices, Fourier modes, or empirical measures.
 
-For sampled sites \(x_1,\dots,x_n\) with weights \(w_i\),
+For sampled sites $x_1,\dots,x_n$ with weights $w_i$,
 
-\[
+$$
 \mu_n=\sum_{i=1}^n w_i\delta_{x_i}.
-\]
+$$
 
 The corresponding finite approximation is
 
-\[
+$$
 (T_nu)(y)
 =
 \Gamma\left(
@@ -78,7 +78,7 @@ u(y),
 \sum_{i=1}^n
 w_iK(y,x_i,u)\Psi(u(x_i))
 \right).
-\]
+$$
 
 NeuralMeasureOperators contains small finite approximators used in this sense.
 
@@ -88,15 +88,15 @@ NeuralMeasureOperators contains small finite approximators used in this sense.
 
 A vector
 
-\[
-x\in\mathbb R^d
-\]
+$$
+x\in\mathbb{R}^d
+$$
 
 is treated as a scalar field on the finite coordinate set
 
-\[
+$$
 X_d=\{1,\dots,d\}.
-\]
+$$
 
 A classifier can act directly on this finite field.
 
@@ -104,12 +104,12 @@ A classifier can act directly on this finite field.
 
 PCA gives an empirical spectral projection
 
-\[
+$$
 P_mx
 =
 \sum_{j=1}^m
 \langle x,v_j\rangle v_j.
-\]
+$$
 
 This is a finite-dimensional approximation of a sampled coordinate field or image field.
 
@@ -117,56 +117,56 @@ This is a finite-dimensional approximation of a sampled coordinate field or imag
 
 For image fields
 
-\[
-u:\{1,\dots,H\}\times\{1,\dots,W\}\to\mathbb R,
-\]
+$$
+u:\{1,\dots,H\}\times\{1,\dots,W\}\to\mathbb{R},
+$$
 
 the DCT representation keeps low-frequency harmonic coefficients
 
-\[
-\widehat u_{ij}
+$$
+\widehat{u}_{ij}
 =
 \sum_{p,q}u_{pq}\phi_{ij}(p,q).
-\]
+$$
 
 The package includes `DCT2DLowFreq` for flattened image arrays.
 
 ### Empirical class-kernel mean
 
-Each class \(c\) is represented by an empirical measure
+Each class $c$ is represented by an empirical measure
 
-\[
+$$
 \mu_c
 =
 \frac{1}{n_c}
 \sum_{i:y_i=c}\delta_{x_i}.
-\]
+$$
 
 Using an RBF kernel
 
-\[
+$$
 k(x,z)
 =
-\exp(-\gamma\|x-z\|^2),
-\]
+\exp\left(-\gamma\|x-z\|^2\right),
+$$
 
 the class score is
 
-\[
+$$
 s_c(x)
 =
 \frac{1}{n_c}
 \sum_{i:y_i=c}
 k(x,x_i).
-\]
+$$
 
 Prediction is
 
-\[
-\widehat y(x)
+$$
+\widehat{y}(x)
 =
-\arg\max_c s_c(x).
-\]
+\operatorname*{arg\,max}_c s_c(x).
+$$
 
 This is a direct empirical-measure classifier: each class is represented by its kernel mean embedding.
 
@@ -174,9 +174,9 @@ This is a direct empirical-measure classifier: each class is represented by its 
 
 The Nyström method approximates the empirical kernel operator by a finite-rank feature map
 
-\[
+$$
 k(x,z)\approx \phi_R(x)^\top\phi_R(z).
-\]
+$$
 
 This gives a lower-rank computable approximation of an RBF kernel machine.
 
@@ -192,36 +192,6 @@ Install the local package:
 
 ```bash
 pip install -e .
-```
-
-Recommended package layout:
-
-```text
-NeuralMeasureOperators/
-  NeuralMeasureOperators/
-    __init__.py
-    representations.py
-    pipelines.py
-  README.md
-  pyproject.toml
-```
-
-Minimal `pyproject.toml`:
-
-```toml
-[project]
-name = "NeuralMeasureOperators"
-version = "0.1.0"
-description = "Finite computational representations of operators acting on functions, fields, and empirical measures."
-requires-python = ">=3.9"
-dependencies = [
-    "numpy",
-    "scipy",
-    "scikit-learn",
-]
-
-[tool.setuptools.packages.find]
-include = ["NeuralMeasureOperators*"]
 ```
 
 ## Basic imports
@@ -243,9 +213,9 @@ from NeuralMeasureOperators import (
 
 The Breast Cancer dataset has 30 features. In this view, each sample is a scalar field over the finite coordinate domain
 
-\[
+$$
 X=\{1,\dots,30\}.
-\]
+$$
 
 The examples below compare several finite approximations of the same represented object.
 
@@ -295,9 +265,9 @@ for name, model in models.items():
 
 Interpretation:
 
-\[
-x\in\mathbb R^{30}
-\]
+$$
+x\in\mathbb{R}^{30}
+$$
 
 is a finite coordinate field.
 
@@ -309,13 +279,13 @@ is a finite coordinate field.
 
 ## Example: Digits image field
 
-The Digits dataset has \(8\times8\) grayscale images. Each sample is a scalar field
+The Digits dataset has $8\times8$ grayscale images. Each sample is a scalar field
 
-\[
-u:\{1,\dots,8\}\times\{1,\dots,8\}\to\mathbb R.
-\]
+$$
+u:\{1,\dots,8\}\times\{1,\dots,8\}\to\mathbb{R}.
+$$
 
-The flattened array has 64 entries, while `DCT2DLowFreq` treats each row as an \(8\times8\) image field.
+The flattened array has 64 entries, while `DCT2DLowFreq` treats each row as an $8\times8$ image field.
 
 ```python
 from sklearn.datasets import load_digits
@@ -365,9 +335,9 @@ for name, model in models.items():
 
 Interpretation:
 
-\[
-u\in\mathbb R^{8\times8}
-\]
+$$
+u\in\mathbb{R}^{8\times8}
+$$
 
 is a sampled image field.
 
@@ -400,11 +370,11 @@ print("reconstructed shape:", X_reconstructed.shape)
 
 Mathematically, this computes
 
-\[
+$$
 u
 \mapsto
-(\widehat u_{i_1j_1},\dots,\widehat u_{i_mj_m}),
-\]
+(\widehat{u}_{i_1j_1},\dots,\widehat{u}_{i_mj_m}),
+$$
 
 where the retained indices are ordered from low to high frequency.
 
@@ -442,17 +412,17 @@ print("score matrix shape:", scores.shape)
 
 The score matrix has shape
 
-\[
+$$
 n_{\text{test}}\times n_{\text{classes}}.
-\]
+$$
 
 Each entry is an empirical kernel integral against a class measure:
 
-\[
+$$
 s_c(x)
 =
 \int k(x,z)\,d\mu_c(z).
-\]
+$$
 
 ## Package API
 
