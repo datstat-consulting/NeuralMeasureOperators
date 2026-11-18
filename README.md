@@ -12,6 +12,7 @@ The package provides scikit-learn-compatible components for:
 - empirical RBF class-kernel-mean classifiers
 - Nyström low-rank RBF kernel approximations
 - exact RBF kernel SVM baselines
+- weighted kernel operators on sampled fields and token measures
 
 The guiding principle is:
 
@@ -449,6 +450,40 @@ kernel_mean(gamma="scale")
 nystroem_ridge(n_components=128, gamma=0.02)
 exact_rbf_svm(C=10.0, gamma="scale")
 ```
+
+## Weighted operators and token measures
+
+```python
+from NeuralMeasureOperators import FiniteMeasure, KernelOperator, RBFKernel
+
+measure = FiniteMeasure(sites=[0, 0.5, 1], features=[1, 2, 4])
+kernel = RBFKernel().fit(measure.sites)
+prediction = KernelOperator(kernel, normalize=True)(measure, targets=[0.25, 0.75])
+```
+
+Each output aggregates weighted features over the source sites. Supply explicit
+quadrature weights when they differ from uniform probability weights. Scalar
+kernels act on each channel; matrix-valued kernels can mix input channels.
+
+```python
+from NeuralMeasureOperators import SymbolicKernel, TokenMeasureEncoder
+
+encoder = TokenMeasureEncoder().fit(["kernel measures", "sampled measures"])
+tokens = encoder.encode("sampled kernel")
+kernel = SymbolicKernel(max_terms=2).fit([0, 0, 0], [0, 1, 2], [1, 3, 9])
+integrated = KernelOperator(kernel)(tokens)
+print(kernel.expression)
+```
+
+Symbolic regression selects terms from a library of symmetric distance and dot
+product expressions. The fitted kernel can take signed values. Use
+`fit_operator` with repeated input/output experiments when individual kernel
+values are unobserved. Identification depends on the variation across those
+experiments. The token encoder accepts pretokenized sequences and vocabulary
+embedding matrices. Token positions and repeated occurrences remain distinct.
+
+See M. Wáng, [Neural computation as operator-theoretic learning on measures](https://doi.org/10.1016/j.neunet.2026.109577),
+*Neural Networks* 205 (2027), 109577.
 
 ## License
 

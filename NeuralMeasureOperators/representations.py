@@ -15,7 +15,7 @@ except ImportError:
     idctn = None
 
 
-class RBFClassMeanClassifier(BaseEstimator, ClassifierMixin):
+class RBFClassMeanClassifier(ClassifierMixin, BaseEstimator):
     """
     Empirical RBF class-kernel-mean classifier.
 
@@ -120,7 +120,7 @@ class RBFClassMeanClassifier(BaseEstimator, ClassifierMixin):
             raise RuntimeError("RBFClassMeanClassifier has not been fitted.")
 
 
-class DCT2DLowFreq(BaseEstimator, TransformerMixin):
+class DCT2DLowFreq(TransformerMixin, BaseEstimator):
     """
     Low-frequency 2D DCT representation for flattened image fields.
 

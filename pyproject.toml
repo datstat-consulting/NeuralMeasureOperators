@@ -2,7 +2,7 @@
 
 [project]
 name = "neural-measure-operators"
-version = "0.1.0"
+version = "0.2.0"
 description = "Finite computational representations of operators acting on functions, fields, and empirical measures."
 readme = "README.md"
 requires-python = ">=3.9"

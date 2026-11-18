@@ -10,7 +10,16 @@ from .pipelines import (
     exact_rbf_svm,
 )
 
+from .kernels import RBFKernel, SymbolicKernel
+from .operators import FiniteMeasure, KernelOperator
+from .text import TokenMeasureEncoder
+
 __all__ = [
+    "FiniteMeasure",
+    "KernelOperator",
+    "RBFKernel",
+    "SymbolicKernel",
+    "TokenMeasureEncoder",
     "DCT2DLowFreq",
     "RBFClassMeanClassifier",
     "raw_logistic",
